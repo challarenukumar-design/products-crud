@@ -1,8 +1,14 @@
-const Product = require("../models/Product");
+const Product = require("../models/product");
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price, category, description } = req.body;
+    const {
+      name,
+      price,
+      category,
+      description,
+      image,
+    } = req.body;
 
     if (!name || !price || !category || !description) {
       return res.status(400).json({
@@ -15,6 +21,7 @@ const createProduct = async (req, res) => {
       price,
       category,
       description,
+      image,
     });
 
     res.status(201).json(product);
