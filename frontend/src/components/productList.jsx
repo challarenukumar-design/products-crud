@@ -6,6 +6,7 @@ function ProductList({
   products,
   fetchProducts,
   setEditProduct,
+  addToCart,
 }) {
   const [enlargedImage, setEnlargedImage] = useState(null);
 
@@ -102,6 +103,15 @@ function ProductList({
                   </p>
 
                   <div className="action-buttons">
+                    <button
+                      className="add-cart-btn"
+                      onClick={() => {
+                        if (addToCart) addToCart(product);
+                        toast.success("🛒 Added to cart");
+                      }}
+                    >
+                      🛒 Add to Cart
+                    </button>
                     <button
                       className="edit-btn"
                       onClick={() => setEditProduct(product)}

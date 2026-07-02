@@ -384,49 +384,188 @@ form button:hover{
   margin-top:10px;
 }
 
-/* ========= BUTTONS ========= */
+  .cart-page{
+    background:rgba(255,255,255,.08);
+    padding:22px;
+    border-radius:18px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 18px 45px rgba(15,23,42,.16);
+  }
+
+  .cart-header{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:18px;
+  }
+
+  .cart-header h2{
+    color:#eef2ff;
+    margin:0;
+  }
+
+  .cart-summary-banner{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .cart-summary-item{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:#fff;
+    padding:14px 18px;
+    border-radius:14px;
+    min-width:140px;
+    box-shadow:0 10px 24px rgba(37,99,235,.18);
+  }
+
+  .cart-summary-item span{
+    display:block;
+    opacity:.8;
+    font-size:13px;
+  }
+
+  .cart-summary-item strong{
+    display:block;
+    margin-top:6px;
+    font-size:20px;
+  }
+
+  .cart-empty-text{
+    color:#cbd5e1;
+    font-size:16px;
+    padding:26px;
+    background:rgba(255,255,255,.12);
+    border-radius:16px;
+  }
+
+  .cart-list{
+    display:grid;
+    gap:14px;
+  }
+
+  .cart-item{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:14px;
+    align-items:center;
+    padding:16px;
+    background:#0f172a;
+    border-radius:16px;
+    color:#e2e8f0;
+    border:1px solid rgba(148,163,184,.18);
+  }
+
+  .cart-item-image-wrap{
+    width:92px;
+    min-width:92px;
+    height:92px;
+    border-radius:16px;
+    overflow:hidden;
+    background:#1e293b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .cart-item-thumb{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .cart-item-details{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  .cart-item-details strong{
+    font-size:16px;
+    color:#f8fafc;
+  }
+
+  .cart-item-meta{
+    font-size:13px;
+    color:#cbd5e1;
+  }
+
+  .cart-total-card{
+    padding:18px 20px;
+    background:linear-gradient(135deg,#1d4ed8,#7c3aed);
+    border-radius:18px;
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 16px 40px rgba(37,99,235,.2);
+  }
+
+  .cart-total-card p{
+    margin:0;
+    opacity:.9;
+    font-size:14px;
+  }
+
+  .cart-total-card strong{
+    font-size:24px;
+  }
+
 
 .action-buttons{
-  display:flex;
-  gap:8px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
   margin-top:auto;
 }
 
-.edit-btn,
-.delete-btn{
-  flex:1;
+.action-buttons button{
+  min-width:0;
+  white-space:normal;
+  text-align:center;
   border:none;
-  padding:8px 10px;
-  border-radius:8px;
+  padding:10px 10px;
+  border-radius:12px;
   cursor:pointer;
   color:#fff;
-  font-weight:600;
-  font-size:12px;
-  transition:.3s;
+  font-weight:700;
+  font-size:13px;
+  line-height:1.3;
+  transition:.3s ease;
+}
+
+.add-cart-btn{
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+}
+
+.add-cart-btn:hover{
+  background:linear-gradient(135deg,#1d4ed8,#3b82f6);
 }
 
 .edit-btn{
-  background:#22c55e;
+  background:linear-gradient(135deg,#22c55e,#4ade80);
 }
 
 .edit-btn:hover{
-  background:#16a34a;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
-.delete-btn{
-  background:#ef4444;
+.delete-btn,
+  .remove-cart-btn{
+    background:linear-gradient(135deg,#ef4444,#f97316);
+  }
+
+  .delete-btn:hover,
+  .remove-cart-btn:hover{
+  background:linear-gradient(135deg,#dc2626,#ef4444);
 }
 
-.delete-btn:hover{
-  background:#dc2626;
-}
-
-.edit-btn:hover,
-.delete-btn:hover{
+.action-buttons button:hover{
   transform:translateY(-2px);
+  box-shadow:0 14px 35px rgba(15,23,42,.14);
 }
-
-/* ========= EMPTY ========= */
 
 .empty{
   background:#fff;
@@ -440,10 +579,7 @@ form button:hover{
   color:#64748b;
 }
 
-/* ========= RESPONSIVE ========= */
-
 @media(max-width:900px){
-
   .navbar{
     flex-direction:column;
     gap:20px;
@@ -457,7 +593,6 @@ form button:hover{
   .header h1{
     font-size:30px;
   }
-
 }
 
 @media(max-width:768px){
@@ -475,7 +610,7 @@ form button:hover{
   }
 
   .action-buttons{
-    flex-direction:column;
+    grid-template-columns:1fr;
   }
 
 }

@@ -17,6 +17,24 @@ function App() {
   const [showSearch, setShowSearch] = useState(false);
 
   const [activePage, setActivePage] = useState("home");
+  const [cart, setCart] = useState(() => {
+    try {
+      const storedCart = localStorage.getItem("stockflow_cart");
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      console.warn("Failed to load saved cart", error);
+      return [];
+    }
+  });
+
+  // persist cart across refreshes
+  useEffect(() => {
+    try {
+      localStorage.setItem("stockflow_cart", JSON.stringify(cart));
+    } catch (error) {
+      console.warn("Failed to save cart", error);
+    }
+  }, [cart]);
 
   // ===========================
   // FETCH PRODUCTS
@@ -55,12 +73,25 @@ function App() {
     setShowSearch((prev) => !prev);
   };
 
+  const addToCart = (product) => {
+    setCart((prev) => [...prev, product]);
+  };
+
+  const removeFromCart = (index) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
+
   // ===========================
   // DASHBOARD
   // ===========================
 
   const totalValue = products.reduce(
     (sum, product) => sum + Number(product.price),
+    0
+  );
+
+  const cartTotal = cart.reduce(
+    (sum, item) => sum + Number(item.price || 0),
     0
   );
 
@@ -91,6 +122,15 @@ function App() {
               onClick={() => setActivePage("products")}
             >
               📦 Products
+            </button>
+
+            <button
+              className={activePage === "cart" ? "active" : ""}
+              onClick={() => setActivePage("cart")}
+              title="View cart"
+            >
+              🛒 Cart
+              <span className="cart-count">{cart.length}</span>
             </button>
 
             <button
@@ -176,9 +216,70 @@ function App() {
                 setEditProduct(product);
                 setActivePage("home");
               }}
+              addToCart={addToCart}
             />
 
           </>
+        )}
+
+        {activePage === "cart" && (
+          <div className="cart-page">
+            <div className="cart-header">
+              <h2>Your Cart</h2>
+              <div className="cart-summary-banner">
+                <div className="cart-summary-item">
+                  <span>Items</span>
+                  <strong>{cart.length}</strong>
+                </div>
+                <div className="cart-summary-item">
+                  <span>Total Value</span>
+                  <strong>₹ {cartTotal}</strong>
+                </div>
+              </div>
+            </div>
+
+            {cart.length === 0 ? (
+              <p className="cart-empty-text">Your cart is empty.</p>
+            ) : (
+              <div className="cart-list">
+                {cart.map((item, idx) => (
+                  <div className="cart-item" key={idx}>
+                    {item.image && item.image.trim() ? (
+                      <div className="cart-item-image-wrap">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="cart-item-thumb"
+                        />
+                      </div>
+                    ) : null}
+
+                    <div className="cart-item-details">
+                      <strong>{item.name}</strong>
+                      <div className="cart-item-meta">₹ {item.price}</div>
+                      <div className="cart-item-meta">
+                        {item.category}
+                      </div>
+                    </div>
+
+                    <button
+                      className="remove-cart-btn"
+                      onClick={() => removeFromCart(idx)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+
+                <div className="cart-total-card">
+                  <div>
+                    <p>Total Cart Value</p>
+                    <strong>₹ {cartTotal}</strong>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
         <footer className="footer">
